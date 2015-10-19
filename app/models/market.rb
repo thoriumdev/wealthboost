@@ -2,9 +2,13 @@ class Market < ActiveRecord::Base
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       data_hash = row.to_hash
+      new_hash = Hash.new()
       data_hash.each do |key, value|
-        data_hash[key] = key.downcase.gsub(/[^0-9a-z ]/i, '').strip
+        new_key = key.downcase.gsub(/[^0-9a-z ]/i, '').strip
+        new_key.gsub!(' ', '_')
+        new_hash[new_key] = value
       end
+      binding.pry
       Market.find_or_create_by!(row.to_hash)
     end
   end
