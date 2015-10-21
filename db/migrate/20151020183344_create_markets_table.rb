@@ -1,13 +1,13 @@
 class CreateMarketsTable < ActiveRecord::Migration
   def change
-    create_table :markets_tables do |t|
+    create_table :markets do |t|
       t.string :ticker
       t.string :fund_name
-      t.string :tot_asset_m
-      t.string :asset_class_broad
-      t.string :geographic_focus_revised
+      t.string :total_assets
+      t.string :asset_class
+      t.string :geo_area
       t.string :expense_ratio
-      t.string :asset_all__equity
+      t.string :asset_all_equity
       t.integer :yearly_return_year1993_cad
       t.integer :yearly_return_year1994_cad
       t.integer :yearly_return_year1995_cad
@@ -36,7 +36,7 @@ class CreateMarketsTable < ActiveRecord::Migration
       t.integer :twenty
       t.integer :retirement
       
-      t.timestamps null:false
+      t.timestamps null: false
     end
   end
 end

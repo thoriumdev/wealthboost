@@ -11,19 +11,68 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019215022) do
+ActiveRecord::Schema.define(version: 20151021222910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "markets_tables", force: :cascade do |t|
+  create_table "asset_classes", force: :cascade do |t|
+    t.string   "asset_class"
+    t.integer  "commodities"
+    t.integer  "equities"
+    t.integer  "equities_dividendyield"
+    t.integer  "equities_midcap"
+    t.integer  "equities_realestate"
+    t.integer  "equities_smallcap"
+    t.integer  "equities_energy"
+    t.integer  "equities_broad"
+    t.integer  "equities_naturalresources"
+    t.integer  "fixedincome_corporate"
+    t.integer  "fixedincome_corporatehighyield"
+    t.integer  "fixedincome_corporateinvestmentgrade"
+    t.integer  "fixedincome_government"
+    t.integer  "fixedincome_highyield"
+    t.integer  "fixedincome_mortgage"
+    t.integer  "fixedincome_governmentinflationprotected"
+    t.integer  "fixedincome_governmentshortduration"
+    t.integer  "fixedincome_governmentintermediateduration"
+    t.integer  "fixedincome_governmentlongduration"
+    t.integer  "fixedincome_corporateshortduration"
+    t.integer  "fixedincome_corporateintermediateduration"
+    t.integer  "fixedincome_corporatelongduration"
+    t.integer  "fixedincome_multiassetclass"
+    t.integer  "fixedincome_municipal"
+    t.integer  "multiassetclass"
+    t.integer  "alternativeinvestments"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  create_table "geo_scores", force: :cascade do |t|
+    t.string   "asia"
+    t.string   "canada"
+    t.string   "eafe"
+    t.string   "emerging_markets"
+    t.string   "europe"
+    t.string   "global"
+    t.string   "latin_america"
+    t.string   "north_america"
+    t.string   "united_states"
+    t.string   "africa"
+    t.string   "australia"
+    t.string   "middle_east"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  create_table "markets", force: :cascade do |t|
     t.string   "ticker"
     t.string   "fund_name"
-    t.string   "tot_asset_m"
-    t.string   "asset_class_broad"
-    t.string   "geographic_focus_revised"
+    t.string   "total_assets"
+    t.string   "asset_class"
+    t.string   "geo_area"
     t.string   "expense_ratio"
-    t.string   "asset_all__equity"
+    t.string   "asset_all_equity"
     t.integer  "yearly_return_year1993_cad"
     t.integer  "yearly_return_year1994_cad"
     t.integer  "yearly_return_year1995_cad"
