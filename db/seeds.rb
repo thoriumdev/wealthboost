@@ -47,6 +47,11 @@ seed_arr.each do |v|
   AssetClass.create!(seed_hash)
 end
 
+AssetClass.all.each_with_index do |obj, index|
+  obj.asset_class = attr_arr[index]
+  obj.save!
+end
+
 bb = "10	0	6	0	0	6	0	0	0	0	0	0"
 cc = "0	10	0	0	0	0	0	6	0	0	0	0"
 dd = "0	0	10	0	0	6	0	0	0	0	0	0"
@@ -71,4 +76,9 @@ geo_seed_arr.each do |v|
     geo_seed_hash[item] = geo_value_arr[index]
   end
   GeoScore.create!(geo_seed_hash)
+end
+
+GeoScore.all.each_with_index do |obj, index|
+  obj.geo_location = geo_attr_arr[index]
+  obj.save!
 end
