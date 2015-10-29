@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'welcome#index'
   get 'import' => 'markets#index'
   post 'import' => 'markets#import'
   # The priority is based upon order of creation: first created -> highest priority.

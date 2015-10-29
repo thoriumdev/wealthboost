@@ -49,13 +49,32 @@ class Market < ActiveRecord::Base
     end
   end
   
-  # def look_up_asset_class(ticker)
-  #   ticker = "BXF"
-  #   obj = Market.where("ticker = #{ticker}")[0]
-  #   asset_class = obj.asset_class
-  #   asset_class.downcase!
-  #   asset_class.gsub!(' ', '')
-  #   asset_class.gsub!('-','_')
-  #   AssetClass.where("#{asset_class}")
-  # end
+  def look_up_asset_class(ticker)
+    ticker = "BXF"
+    obj = Market.where("ticker = '#{ticker}'")[0]
+    asset_class = obj.asset_class
+    asset_class.downcase!
+    asset_class.gsub!(' ', '')
+    asset_class.gsub!('-','_')
+  end
+  
+  def self.all_etf
+    Market.find_each do |obj|
+      ticker = obj.ticker.upcase
+      new_obj = Market.where("ticker = '#{ticker}'")[0]
+      asset_class = new_obj.asset_class
+    end
+  end
 end
+
+
+
+
+
+
+
+
+
+
+
+

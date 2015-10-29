@@ -1,5 +1,5 @@
 class MarketsController < ApplicationController
-  def index 
+  def index
   end
   
   def import
