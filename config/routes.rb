@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
   get 'import' => 'markets#index'
   post 'import' => 'markets#import'
+  get 'input_ticker' => 'markets#input_ticker'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

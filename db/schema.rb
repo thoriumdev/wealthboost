@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027221302) do
+ActiveRecord::Schema.define(version: 20151030213439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,12 +40,13 @@ ActiveRecord::Schema.define(version: 20151027221302) do
     t.integer  "fixedincome_corporateshortduration"
     t.integer  "fixedincome_corporateintermediateduration"
     t.integer  "fixedincome_corporatelongduration"
-    t.integer  "fixedincome_multiassetclass"
+    t.integer  "fixedincome_multi_assetclass"
     t.integer  "fixedincome_municipal"
-    t.integer  "multiassetclass"
+    t.integer  "multi_assetclass"
     t.integer  "alternativeinvestments"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+    t.integer  "fixedincome"
   end
 
   create_table "geo_scores", force: :cascade do |t|
@@ -103,6 +104,18 @@ ActiveRecord::Schema.define(version: 20151027221302) do
     t.integer  "retirement"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "asset_class_score"
+    t.integer  "geo_score"
+    t.integer  "total_score"
+  end
+
+  create_table "securities", force: :cascade do |t|
+    t.string   "security"
+    t.integer  "asset_class_score"
+    t.integer  "geo_area_score"
+    t.integer  "market_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
 end

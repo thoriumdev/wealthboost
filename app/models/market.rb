@@ -1,4 +1,6 @@
 class Market < ActiveRecord::Base
+  has_many :securities
+  
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       data_hash = row.to_hash
@@ -49,32 +51,17 @@ class Market < ActiveRecord::Base
     end
   end
   
-  def look_up_asset_class(ticker)
-    ticker = "BXF"
+  def self.look_up_asset_class(ticker)
+    ticker.upcase!
     obj = Market.where("ticker = '#{ticker}'")[0]
-    asset_class = obj.asset_class
-    asset_class.downcase!
-    asset_class.gsub!(' ', '')
-    asset_class.gsub!('-','_')
+    score = AssetClass.get_asset_score(obj)
   end
   
-  def self.all_etf
+  def self.all_sec
     Market.find_each do |obj|
       ticker = obj.ticker.upcase
       new_obj = Market.where("ticker = '#{ticker}'")[0]
-      asset_class = new_obj.asset_class
+      AssetClass.get_asset_score(new_obj)
     end
   end
 end
-
-
-
-
-
-
-
-
-
-
-
-
