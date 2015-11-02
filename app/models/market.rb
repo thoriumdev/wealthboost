@@ -49,6 +49,14 @@ class Market < ActiveRecord::Base
       final_hash = Hash[new_hash.map { |k, v| [mappings[k], v]}]
       Market.find_or_create_by!(final_hash)
     end
+    Market.all.each do |sec|
+      sec.ticker.upcase!
+      sec.asset_class.downcase!
+      sec.asset_class.gsub!(' ', '')
+      sec.asset_class.gsub!('-', '_')
+      sec.asset_class.gsub!(/[()]/,'')
+      sec.save!
+    end
   end
   
   def self.look_up_asset_class(ticker)
