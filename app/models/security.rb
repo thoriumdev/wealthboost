@@ -18,7 +18,17 @@ class Security < ActiveRecord::Base
   end
   
   def self.generate_last_recommendation(sec)
-    sec.securities.where("asset_class = '#{sec.asset_class}'").order(expense_ratio: :asc, total_assets: :desc).limit(1)
+    # if commodities then commodities broad
+    # if equities then equities broad
+    # if fixed income then fixed income broad
+    # if multiassetclass then mix of two securities
+    if sec.asset_class[0, 11] == "commodities"
+      sec.securities.where("asset_class = 'commodities_broad'").order(expense_ratio: :asc, total_assets: :desc).limit(1)[0]
+    elsif sec.asset_class[0, 8] == "equities"
+      sec.securities.where("asset_class = 'equities_broad'").order(expense_ratio: :asc, total_assets: :desc).limit(1)[0]
+    elsif sec.asset_class[0, 11] == "fixedincome"
+      sec.securities.where("asset_class = 'fixedincome_multi_assetclass'").order(expense_ratio: :asc, total_assets: :desc).limit(1)[0]
+    end
   end
 end
 # a = GeoScore.attribute_names

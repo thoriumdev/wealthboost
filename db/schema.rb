@@ -11,14 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151104155114) do
+ActiveRecord::Schema.define(version: 20151104212336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "asset_classes", force: :cascade do |t|
     t.string   "asset_class"
-    t.integer  "commodities"
+    t.integer  "commodities_agriculture"
+    t.integer  "commodities_gold"
+    t.integer  "commodities_naturalgas"
+    t.integer  "commodities_oil"
+    t.integer  "commodities_preciousmetals"
+    t.integer  "commodities_silver"
+    t.integer  "commodities_broad"
     t.integer  "equities"
     t.integer  "equities_dividendyield"
     t.integer  "equities_midcap"
@@ -46,7 +52,6 @@ ActiveRecord::Schema.define(version: 20151104155114) do
     t.integer  "alternativeinvestments"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
-    t.integer  "fixedincome"
   end
 
   create_table "geo_scores", force: :cascade do |t|
@@ -75,33 +80,8 @@ ActiveRecord::Schema.define(version: 20151104155114) do
     t.string   "geo_area"
     t.decimal  "expense_ratio"
     t.decimal  "asset_all_equity"
-    t.decimal  "yearly_return_year1993_cad"
-    t.decimal  "yearly_return_year1994_cad"
-    t.decimal  "yearly_return_year1995_cad"
-    t.decimal  "yearly_return_year1996_cad"
-    t.decimal  "yearly_return_year1997_cad"
-    t.decimal  "yearly_return_year1998_cad"
-    t.decimal  "yearly_return_year1999_cad"
-    t.decimal  "yearly_return_year2000_cad"
-    t.decimal  "yearly_return_year2001_cad"
-    t.decimal  "yearly_return_year2002_cad"
-    t.decimal  "yearly_return_year2003_cad"
-    t.decimal  "yearly_return_year2004_cad"
-    t.decimal  "yearly_return_year2005_cad"
-    t.decimal  "yearly_return_year2006_cad"
-    t.decimal  "yearly_return_year2007_cad"
-    t.decimal  "yearly_return_year2008_cad"
-    t.decimal  "yearly_return_year2009_cad"
-    t.decimal  "yearly_return_year2010_cad"
-    t.decimal  "yearly_return_year2011_cad"
-    t.decimal  "yearly_return_year2012_cad"
-    t.decimal  "yearly_return_year2013_cad"
-    t.decimal  "yearly_return_year2014_cad"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.integer  "asset_class_score"
-    t.integer  "geo_score"
-    t.integer  "total_score"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "securities", force: :cascade do |t|

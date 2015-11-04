@@ -11,7 +11,7 @@ class Market < ActiveRecord::Base
         if value == "N.A." || value == "#N/A"
           value = 0
         end
-        if value.is_a?(Float)
+        if value.to_f > 0
           new_hash[new_key] = value.to_f
         else
           new_hash[new_key] = value
@@ -24,29 +24,7 @@ class Market < ActiveRecord::Base
          "asset_class_broad" => "asset_class",
          "geographic_focus_revised" => "geo_area",
          "expense_ratio" => "expense_ratio",
-         "asset_all__equity" => "asset_all_equity",
-         "yearly_return_year1993_cad" => "yearly_return_year1993_cad",
-         "yearly_return_year1994_cad" => "yearly_return_year1994_cad",
-         "yearly_return_year1995_cad" => "yearly_return_year1995_cad",
-         "yearly_return_year1996_cad" => "yearly_return_year1996_cad",
-         "yearly_return_year1997_cad" => "yearly_return_year1997_cad",
-         "yearly_return_year1998_cad" => "yearly_return_year1998_cad",
-         "yearly_return_year1999_cad" => "yearly_return_year1999_cad",
-         "yearly_return_year2000_cad" => "yearly_return_year2000_cad",
-         "yearly_return_year2001_cad" => "yearly_return_year2001_cad",
-         "yearly_return_year2002_cad" => "yearly_return_year2002_cad",
-         "yearly_return_year2003_cad" => "yearly_return_year2003_cad",
-         "yearly_return_year2004_cad" => "yearly_return_year2004_cad",
-         "yearly_return_year2005_cad" => "yearly_return_year2005_cad",
-         "yearly_return_year2006_cad" => "yearly_return_year2006_cad",
-         "yearly_return_year2007_cad" => "yearly_return_year2007_cad",
-         "yearly_return_year2008_cad" => "yearly_return_year2008_cad",
-         "yearly_return_year2009_cad" => "yearly_return_year2009_cad",
-         "yearly_return_year2010_cad" => "yearly_return_year2010_cad",
-         "yearly_return_year2011_cad" => "yearly_return_year2011_cad",
-         "yearly_return_year2012_cad" => "yearly_return_year2012_cad",
-         "yearly_return_year2013_cad" => "yearly_return_year2013_cad",
-         "yearly_return_year2014_cad" => "yearly_return_year2014_cad"
+         "asset_all__equity" => "asset_all_equity"
       }
       final_hash = Hash[new_hash.map { |k, v| [mappings[k], v]}]
       Market.find_or_create_by!(final_hash)

@@ -2,7 +2,13 @@ class CreateAssetClassTable < ActiveRecord::Migration
   def change
     create_table :asset_classes do |t|
       t.string :asset_class
-      t.integer :commodities
+      t.integer :commodities_agriculture
+      t.integer :commodities_gold
+      t.integer :commodities_naturalgas
+      t.integer :commodities_oil
+      t.integer :commodities_preciousmetals 
+      t.integer :commodities_silver
+      t.integer :commodities_broad
       t.integer :equities
       t.integer :equities_dividendyield
       t.integer :equities_midcap
