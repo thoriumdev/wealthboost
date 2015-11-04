@@ -1,6 +1,6 @@
 <div class="row search-form">
   <div class="large-4">
-    <%= form_tag(input_ticker_path, method: "get") do %>
+    <%= form_tag(results_path, method: "get") do %>
       <%= text_field_tag(:q, nil, placeholder: "ticker") %>
       <%= submit_tag("Search", class: "button") %>
     <% end %>

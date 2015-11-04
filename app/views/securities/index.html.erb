@@ -1,0 +1,6 @@
+<% @results.each do |sec| %>
+  <%= sec.security %>
+  <%= sec.total_score %>
+  <%= sec.expense_ratio.to_f %>
+  <%= sec.total_assets.to_f %>
+<% end %>

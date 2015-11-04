@@ -8,7 +8,14 @@ class Market < ActiveRecord::Base
       data_hash.each do |key, value|
         new_key = key.downcase.gsub(/[^0-9a-z ]/i, '').strip
         new_key.gsub!(' ', '_')
-        new_hash[new_key] = value
+        if value == "N.A." || value == "#N/A"
+          value = 0
+        end
+        if value.is_a?(Float)
+          new_hash[new_key] = value.to_f
+        else
+          new_hash[new_key] = value
+        end
       end
       mappings = {
         "ticker" => "ticker",
@@ -39,12 +46,7 @@ class Market < ActiveRecord::Base
          "yearly_return_year2011_cad" => "yearly_return_year2011_cad",
          "yearly_return_year2012_cad" => "yearly_return_year2012_cad",
          "yearly_return_year2013_cad" => "yearly_return_year2013_cad",
-         "yearly_return_year2014_cad" => "yearly_return_year2014_cad",
-         "5" => "five",
-         "10" => "ten",
-         "15" => "fifteen",
-         "20" => "twenty",
-         "retirement" => "retirement"
+         "yearly_return_year2014_cad" => "yearly_return_year2014_cad"
       }
       final_hash = Hash[new_hash.map { |k, v| [mappings[k], v]}]
       Market.find_or_create_by!(final_hash)
@@ -52,6 +54,8 @@ class Market < ActiveRecord::Base
     Market.all.each do |sec|
       sec.ticker.upcase!
       sec.asset_class.downcase!
+      sec.geo_area.downcase!
+      sec.geo_area.gsub!(' ', '_')
       sec.asset_class.gsub!(' ', '')
       sec.asset_class.gsub!('-', '_')
       sec.asset_class.gsub!(/[()]/,'')
@@ -61,15 +65,17 @@ class Market < ActiveRecord::Base
   
   def self.look_up_asset_class(ticker)
     ticker.upcase!
-    obj = Market.where("ticker = '#{ticker}'")[0]
-    score = AssetClass.get_asset_score(obj)
+    sec = Market.where("ticker = '#{ticker}'")[0]
+    binding.pry
+    # This is where you need to see what asset class the security
+    # is (e.g anything starting with equities = equities broad and fixed = fixed) 
+    # and pull all Security objects that
+    Security.generate_recommendations(sec)
   end
   
   def self.all_sec
-    Market.find_each do |obj|
-      ticker = obj.ticker.upcase
-      new_obj = Market.where("ticker = '#{ticker}'")[0]
-      AssetClass.get_asset_score(new_obj)
+    Market.all.each do |sec|
+      AssetClass.get_asset_score(sec)
     end
   end
 end

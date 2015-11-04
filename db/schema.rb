@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030213439) do
+ActiveRecord::Schema.define(version: 20151103155314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,38 +70,33 @@ ActiveRecord::Schema.define(version: 20151030213439) do
   create_table "markets", force: :cascade do |t|
     t.string   "ticker"
     t.string   "fund_name"
-    t.string   "total_assets"
+    t.decimal  "total_assets"
     t.string   "asset_class"
     t.string   "geo_area"
-    t.string   "expense_ratio"
-    t.string   "asset_all_equity"
-    t.integer  "yearly_return_year1993_cad"
-    t.integer  "yearly_return_year1994_cad"
-    t.integer  "yearly_return_year1995_cad"
-    t.integer  "yearly_return_year1996_cad"
-    t.integer  "yearly_return_year1997_cad"
-    t.integer  "yearly_return_year1998_cad"
-    t.integer  "yearly_return_year1999_cad"
-    t.integer  "yearly_return_year2000_cad"
-    t.integer  "yearly_return_year2001_cad"
-    t.integer  "yearly_return_year2002_cad"
-    t.integer  "yearly_return_year2003_cad"
-    t.integer  "yearly_return_year2004_cad"
-    t.integer  "yearly_return_year2005_cad"
-    t.integer  "yearly_return_year2006_cad"
-    t.integer  "yearly_return_year2007_cad"
-    t.integer  "yearly_return_year2008_cad"
-    t.integer  "yearly_return_year2009_cad"
-    t.integer  "yearly_return_year2010_cad"
-    t.integer  "yearly_return_year2011_cad"
-    t.integer  "yearly_return_year2012_cad"
-    t.integer  "yearly_return_year2013_cad"
-    t.integer  "yearly_return_year2014_cad"
-    t.integer  "five"
-    t.integer  "ten"
-    t.integer  "fifteen"
-    t.integer  "twenty"
-    t.integer  "retirement"
+    t.decimal  "expense_ratio"
+    t.decimal  "asset_all_equity"
+    t.decimal  "yearly_return_year1993_cad"
+    t.decimal  "yearly_return_year1994_cad"
+    t.decimal  "yearly_return_year1995_cad"
+    t.decimal  "yearly_return_year1996_cad"
+    t.decimal  "yearly_return_year1997_cad"
+    t.decimal  "yearly_return_year1998_cad"
+    t.decimal  "yearly_return_year1999_cad"
+    t.decimal  "yearly_return_year2000_cad"
+    t.decimal  "yearly_return_year2001_cad"
+    t.decimal  "yearly_return_year2002_cad"
+    t.decimal  "yearly_return_year2003_cad"
+    t.decimal  "yearly_return_year2004_cad"
+    t.decimal  "yearly_return_year2005_cad"
+    t.decimal  "yearly_return_year2006_cad"
+    t.decimal  "yearly_return_year2007_cad"
+    t.decimal  "yearly_return_year2008_cad"
+    t.decimal  "yearly_return_year2009_cad"
+    t.decimal  "yearly_return_year2010_cad"
+    t.decimal  "yearly_return_year2011_cad"
+    t.decimal  "yearly_return_year2012_cad"
+    t.decimal  "yearly_return_year2013_cad"
+    t.decimal  "yearly_return_year2014_cad"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "asset_class_score"
@@ -114,8 +109,12 @@ ActiveRecord::Schema.define(version: 20151030213439) do
     t.integer  "asset_class_score"
     t.integer  "geo_area_score"
     t.integer  "market_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "compared_to_security"
+    t.decimal  "expense_ratio"
+    t.decimal  "total_assets"
+    t.integer  "total_score"
   end
 
 end

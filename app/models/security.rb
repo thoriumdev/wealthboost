@@ -1,17 +1,26 @@
-class Security < ActiveRecord::Base  
-def self.rank_all_sec(sec_obj, asset_class_obj)
-  start_counter = 2
-  batch_size_counter = 4800
-  Market.find_in_batches(start: start_counter, batch_size: batch_size_counter) do |group|
-    group.each do |sec|
+class Security < ActiveRecord::Base
+  belongs_to :market
+  
+  def self.rank_all_sec(sec_obj, asset_class_obj, geo_area_obj)
+    Market.all.each do |sec|
       ticker = sec.ticker.upcase
       sec_obj_compare = Market.where("ticker = '#{ticker}'")[0]
-      sec_obj_compare_attr = sec_obj_compare.asset_class.to_sym
-      score = asset_class_obj.send(sec_obj_compare_attr)
-      new_obj = sec_obj.securities.create!(security: sec_obj_compare.ticker, asset_class_score: score)
+      sec_obj_compare_asset_score = sec_obj_compare.asset_class.to_sym
+      sec_obj_compare_geo_score = sec_obj_compare.geo_area.to_sym
+      asset_class_score = asset_class_obj.send(sec_obj_compare_asset_score)
+      geo_area_score = geo_area_obj.send(sec_obj_compare_geo_score)
+      new_obj = sec_obj.securities.create!(security: sec_obj_compare.ticker, asset_class_score: asset_class_score, expense_ratio: sec_obj_compare.expense_ratio, total_assets: sec_obj_compare.total_assets, geo_area_score: geo_area_score, total_score: asset_class_score + geo_area_score.to_i)
     end
-  start_counter += 1
-  batch_size_counter -= 1
+  end
+  
+  def self.generate_recommendations(sec)
+    sec.securities.where('total_score >= 16').order(expense_ratio: :asc, total_assets: :desc).limit(2)
   end
 end
-end
+# a = GeoScore.attribute_names
+# a.shift(1)
+# a.pop(3)
+# GeoScore.all.each_with_index do |item, index|
+#   item.geo_location = a[index]
+#   item.save!
+# end
