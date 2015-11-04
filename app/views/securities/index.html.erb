@@ -1,6 +1,22 @@
+<tr>
+  <th>Ticker</th>
+  <th>Total Score</th>
+  <th>Expense Ratio</th>
+  <th>Total Assets</th>
+</tr>
+
 <% @results.each do |sec| %>
-  <%= sec.security %>
-  <%= sec.total_score %>
-  <%= sec.expense_ratio.to_f %>
-  <%= sec.total_assets.to_f %>
+  <tr>
+    <td><%= sec.security %></td>
+    <td><%= sec.total_score %></td>
+    <td><%= sec.expense_ratio.to_f %></td>
+    <td><%= sec.total_assets.to_f %></td>
+  </tr>
 <% end %>
+
+<tr>
+  <td>@last_result.security</td>
+  <td>@last_result.total_score</td>
+  <td>@last_result.expense_ratio.to_f</td>
+  <td>@last_result.total_assets.to_f</td>
+</tr>

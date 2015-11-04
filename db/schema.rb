@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103155314) do
+ActiveRecord::Schema.define(version: 20151104155114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20151103155314) do
     t.decimal  "expense_ratio"
     t.decimal  "total_assets"
     t.integer  "total_score"
+    t.string   "asset_class"
   end
 
 end

@@ -63,14 +63,16 @@ class Market < ActiveRecord::Base
     end
   end
   
-  def self.look_up_asset_class(ticker)
+  def self.first_two_recommendations(ticker)
     ticker.upcase!
     sec = Market.where("ticker = '#{ticker}'")[0]
-    binding.pry
-    # This is where you need to see what asset class the security
-    # is (e.g anything starting with equities = equities broad and fixed = fixed) 
-    # and pull all Security objects that
     Security.generate_recommendations(sec)
+  end
+  
+  def self.last_recommendation(ticker)
+    ticker.upcase!
+    sec = Market.where("ticker = '#{ticker}'")[0]
+    Security.generate_last_recommendation(sec)
   end
   
   def self.all_sec
