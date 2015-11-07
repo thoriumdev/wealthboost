@@ -8,7 +8,8 @@ class Market < ActiveRecord::Base
       data_hash.each do |key, value|
         new_key = key.downcase.gsub(/[^0-9a-z ]/i, '').strip
         new_key.gsub!(' ', '_')
-        if value == "N.A." || value == "#N/A"
+        value.strip!
+        if value == "N.A." || value == "#N/A" || value == "-"
           value = 0
         end
         if value.to_f > 0
