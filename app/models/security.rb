@@ -38,7 +38,6 @@ class Security < ActiveRecord::Base
   end
   
   def self.generate_last_recommendation(sec)
-    binding.pry
     if sec.asset_class == "multi_assetclass" && sec.geo_area == "united_states"
       schb = Market.where("ticker = 'SCHB'")[0]
       schz = Market.where("ticker = 'SCHZ'")[0]
@@ -48,11 +47,11 @@ class Security < ActiveRecord::Base
       xqb = Market.where("ticker = 'XQB'")[0]
       return [hxt, xqb]
     elsif sec.asset_class[0, 11] == "commodities"
-      sec.securities.where("asset_class = 'commodities_broad'").order(expense_ratio: :asc, total_assets: :desc).limit(1)[0]
+      sec.securities.where("total_score >= 16 AND asset_class = 'commodities_broad'").order(expense_ratio: :asc, total_assets: :desc).limit(1)[0]
     elsif sec.asset_class[0, 8] == "equities"
-      sec.securities.where("asset_class = 'equities_broad'").order(expense_ratio: :asc, total_assets: :desc).limit(1)[0]
+      sec.securities.where("total_score >= 16 AND asset_class = 'equities_broad'").order(expense_ratio: :asc, total_assets: :desc).limit(1)[0]
     elsif sec.asset_class[0, 11] == "fixedincome"
-      sec.securities.where("asset_class = 'fixedincome_multi_assetclass'").order(expense_ratio: :asc, total_assets: :desc).limit(1)[0]
+      sec.securities.where("total_score >= 16 AND asset_class = 'fixedincome_multi_assetclass'").order(expense_ratio: :asc, total_assets: :desc).limit(1)[0]
     end
   end
 end

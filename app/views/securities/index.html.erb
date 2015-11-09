@@ -14,15 +14,27 @@
       <td><%= sec.total_assets.to_f %></td>
     </tr>
   <% end %>
-  
-  <% @last_results.each do |last_result| %>
-  <tr>
-    <td><%= last_result.ticker %></td>
-    <td><%= last_result.fund_name %></td>
-    <td><%= last_result.expense_ratio.to_f %></td>
-    <td><%= last_result.total_assets.to_f %></td>
-    <td><%= last_result.asset_class %></td>
-    <td><%= last_result.geo_area %></td>
-  </tr>
+  <% if @last_results.is_a?(Array) %>
+    <% @last_results.each do |last_result| %>
+    <tr>
+      <td><%= last_result.security %></td>
+      <td><%= last_result.market.fund_name %></td>
+      <td><%= last_result.expense_ratio.to_f %></td>
+      <td><%= last_result.total_assets.to_f %></td>
+      <td><%= last_result.asset_class %></td>
+      <td><%= last_result.geo_area %></td>
+    </tr>
+    <% end %>
+  <% elsif @last_results.nil? %>
+    <h2>Please try a different security.</h2>
+  <% else %>
+    <tr>
+      <td><%= @last_results.security %></td>
+      <td><%= @last_results.market.fund_name %></td>
+      <td><%= @last_results.expense_ratio.to_f %></td>
+      <td><%= @last_results.total_assets.to_f %></td>
+      <td><%= @last_results.asset_class %></td>
+      <td><%= @last_results.market.geo_area %></td>
+    </tr>
   <% end %>
 </table>
