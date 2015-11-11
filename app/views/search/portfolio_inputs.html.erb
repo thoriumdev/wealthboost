@@ -1,0 +1,8 @@
+<div class="row search-form">
+  <div class="large-4">
+    <%= form_tag(results_path, method: "get") do %>
+      <%= text_field_tag(:q, nil, placeholder: "ticker") %>
+      <%= submit_tag("Search", class: "button") %>
+    <% end %>
+  </div>
+</div>

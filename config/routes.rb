@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'welcome#index'
+  get 'portfolio_inputs' => 'search#portfolio_inputs'
   get 'results' => 'securities#index'
   get 'import' => 'markets#index'
   post 'import' => 'markets#import'

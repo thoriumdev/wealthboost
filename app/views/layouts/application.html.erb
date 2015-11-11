@@ -13,7 +13,21 @@
   </head>
 
   <body>
-
+  <nav class="top-bar" data-topbar role="navigation">
+    <ul class="title-area">
+      <li class="name">
+        <h1><%= link_to 'WealthBoost', root_path %></h1>
+      </li>
+      <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
+    </ul>      
+    <section class="top-bar-section">
+      <ul class="right">
+        <li class="nav-dropdown-links"><%= link_to 'first' %></li>
+        <li class="nav-dropdown-links"><%= link_to 'second' %></li>
+        <li class="nav-dropdown-links"><%= link_to 'third' %></li>
+      </ul>
+    </section>
+  </nav>
     <%= yield %>
 
   </body>
