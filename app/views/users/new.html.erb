@@ -1,0 +1,63 @@
+<div class="homepage-image-container">
+  <%= image_tag("home_page.jpg", class: "home-page-photo") %>
+  <div class="homepage-image-text">
+    The average person loses
+    more than $155,000 of their wealth
+    to investment fees over time.
+  </div>
+  <div class="homepage-image-more-text">
+    Isn't it time you reclaim your wealth?
+  </div>
+</div>
+
+<%= form_for @user, html: { class: "first-signup-form"} do |f| %>
+  How old are you?
+  <%= f.text_field :age %>
+  What's your income?
+  <%= f.text_field :income %>
+  Are you retired?
+  Yes: <%= f.radio_button :retired, checked: true %>
+  No: <%= f.radio_button :retired, checked: false %>
+  <br>
+  Do you have investments?
+  Yes: <%= f.radio_button :current_investments, checked: true %>
+  No: <%= f.radio_button :current_investments, checked: false %>
+  <br>
+  How much have you invested so far?
+  <%= f.text_field :current_investments_amount %>
+<% end %>
+
+<div class="account-types-container">
+  <div class="account-type">
+    <div class="account-type-text">
+      Company Sponsored Investment Plan
+    </div>
+  </div>
+  <div class="account-type">
+    <div class="account-type-text">
+      Online Investment Manager <br>
+      (e.g WealthBar, Wealth Simple)
+    </div>
+  </div>
+  <div class="account-type">
+    <div class="account-type-text">
+      Financial Advisor Managed Account
+    </div>
+  </div>
+  <div class="account-type">
+    <div class="account-type-text">
+      Personal Online Investment Account <br>
+      (TD Ameritrade, Fidelity, etc..)
+    </div>
+  </div>
+  <div class="account-type">
+    <div class="account-type-text">
+      Pension Fund
+    </div>
+  </div>
+  <div class="account-type">
+    <div class="account-type-text">
+      I don't know
+    </div>
+  </div>
+</div>

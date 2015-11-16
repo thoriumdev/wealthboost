@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151104212336) do
+ActiveRecord::Schema.define(version: 20151115232312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,21 @@ ActiveRecord::Schema.define(version: 20151104212336) do
     t.decimal  "total_assets"
     t.integer  "total_score"
     t.string   "asset_class"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "password"
+    t.string   "password_confirmation"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.integer  "age"
+    t.integer  "income"
+    t.boolean  "retired",                    default: false
+    t.integer  "current_investments_amount"
+    t.boolean  "current_investments",        default: false
   end
 
 end
