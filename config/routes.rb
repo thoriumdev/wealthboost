@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'welcome#index'
-  resources :users
+  resources :users do
+    resources :accounts, only: [:new, :create]
+  end
   get 'portfolio_inputs' => 'search#portfolio_inputs'
   get 'results' => 'securities#index'
   get 'import' => 'markets#index'

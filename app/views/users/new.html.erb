@@ -16,48 +16,14 @@
   What's your income?
   <%= f.text_field :income %>
   Are you retired?
-  Yes: <%= f.radio_button :retired, checked: true %>
-  No: <%= f.radio_button :retired, checked: false %>
+  Yes: <%= f.radio_button :retired, true %>
+  No: <%= f.radio_button :retired, false %>
   <br>
   Do you have investments?
-  Yes: <%= f.radio_button :current_investments, checked: true %>
-  No: <%= f.radio_button :current_investments, checked: false %>
+  Yes: <%= f.radio_button :current_investments, true %>
+  No: <%= f.radio_button :current_investments, false %>
   <br>
   How much have you invested so far?
   <%= f.text_field :current_investments_amount %>
+  <%= f.submit "Continue", class: "button" %>
 <% end %>
-
-<div class="account-types-container">
-  <div class="account-type">
-    <div class="account-type-text">
-      Company Sponsored Investment Plan
-    </div>
-  </div>
-  <div class="account-type">
-    <div class="account-type-text">
-      Online Investment Manager <br>
-      (e.g WealthBar, Wealth Simple)
-    </div>
-  </div>
-  <div class="account-type">
-    <div class="account-type-text">
-      Financial Advisor Managed Account
-    </div>
-  </div>
-  <div class="account-type">
-    <div class="account-type-text">
-      Personal Online Investment Account <br>
-      (TD Ameritrade, Fidelity, etc..)
-    </div>
-  </div>
-  <div class="account-type">
-    <div class="account-type-text">
-      Pension Fund
-    </div>
-  </div>
-  <div class="account-type">
-    <div class="account-type-text">
-      I don't know
-    </div>
-  </div>
-</div>
