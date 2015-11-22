@@ -25,5 +25,9 @@
   <br>
   How much have you invested so far?
   <%= f.text_field :current_investments_amount %>
+  How long have you been investing? (rough estimate)
+  <%= f.text_field :investments_length %>
+  Where are your investments currently held?
+  <%= f.text_field :current_custodian %>
   <%= f.submit "Continue", class: "button" %>
 <% end %>

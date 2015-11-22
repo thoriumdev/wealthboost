@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116221150) do
+ActiveRecord::Schema.define(version: 20151122092720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,15 @@ ActiveRecord::Schema.define(version: 20151116221150) do
     t.string   "geo_location"
   end
 
+  create_table "investments", force: :cascade do |t|
+    t.string   "ticker"
+    t.string   "name"
+    t.decimal  "average_exp_ratio"
+    t.integer  "user_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
   create_table "markets", force: :cascade do |t|
     t.string   "ticker"
     t.string   "fund_name"
@@ -118,6 +127,11 @@ ActiveRecord::Schema.define(version: 20151116221150) do
     t.boolean  "retired",                    default: false
     t.integer  "current_investments_amount"
     t.boolean  "current_investments",        default: false
+    t.integer  "investments_length"
+    t.string   "current_custodian"
+    t.decimal  "return_today",               default: 6.0
+    t.decimal  "return_retirement",          default: 5.0
+    t.decimal  "salary_growth",              default: 2.9
   end
 
 end

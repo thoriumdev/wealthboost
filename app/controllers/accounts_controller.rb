@@ -1,6 +1,23 @@
 class AccountsController < ApplicationController
   def new
     @user = User.find(params[:user_id])
-    binding.pry
+  end
+  
+  def create
+    @user = User.find(params[:user_id])
+    acc_names = account_params[:account_names]
+    acc_names.each do |acc|
+      acc.gsub!("<br>", "")
+      acc.gsub!("\n", "")
+      acc.squeeze!(" ")
+      @user.accounts.create(name: acc)
+    end
+    redirect_to root_path
+  end
+  
+  private
+  
+  def account_params
+    params.require(:account).permit(:account_names => [])
   end
 end
