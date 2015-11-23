@@ -31,6 +31,8 @@ function accountsAjax() {
     method: "POST",
     url: "/users/" + userId + "/accounts",
     data: { account: { account_names: accountsArr } }
-  })
+  }).done(function(data) {
+    window.location.href = "/users/" + data.id + "/investments/new"
+  });
 }
 

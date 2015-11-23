@@ -1,0 +1,11 @@
+<h1>What investments do you have?</h1>
+<%= form_for [@user, @investment] do |f| %>
+  <%= f.label :investment_one %>
+  <%= f.text_field :investment_one %>
+  <%= f.label :investment_two %>
+  <%= f.text_field :investment_two %>
+  <%= f.label :investment_three %>
+  <%= f.text_field :investment_three %>
+  
+  <%= f.submit class: "button" %>
+<% end %>

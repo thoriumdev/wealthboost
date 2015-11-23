@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151122092720) do
+ActiveRecord::Schema.define(version: 20151123214350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,9 @@ ActiveRecord::Schema.define(version: 20151122092720) do
     t.integer  "user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.string   "investment_one"
+    t.string   "investment_two"
+    t.string   "investment_three"
   end
 
   create_table "markets", force: :cascade do |t|
@@ -98,6 +101,15 @@ ActiveRecord::Schema.define(version: 20151122092720) do
     t.decimal  "asset_all_equity"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+  end
+
+  create_table "projections", force: :cascade do |t|
+    t.integer "age"
+    t.integer "contribution"
+    t.integer "starting_value"
+    t.integer "ending_value"
+    t.integer "fees_paid"
+    t.integer "user_id"
   end
 
   create_table "securities", force: :cascade do |t|

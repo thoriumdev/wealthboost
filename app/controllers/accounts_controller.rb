@@ -12,7 +12,10 @@ class AccountsController < ApplicationController
       acc.squeeze!(" ")
       @user.accounts.create(name: acc)
     end
-    redirect_to root_path
+    
+    respond_to do |format|
+      format.json { render json: @user }
+    end
   end
   
   private

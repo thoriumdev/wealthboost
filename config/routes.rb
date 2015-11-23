@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   root 'welcome#index'
-  resources :users do
+  resources :users, shallow: true do
     resources :accounts, only: [:new, :create]
+    resources :investments, only: [:new, :create]
   end
   get 'portfolio_inputs' => 'search#portfolio_inputs'
   get 'results' => 'securities#index'
