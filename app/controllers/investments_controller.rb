@@ -40,7 +40,9 @@ class InvestmentsController < ApplicationController
       investment_three: @investment_three,
       average_exp_ratio: (sum/3).to_f
     )
-    Projection.wealth_lost_to_date(@user)
+    Projection.first_contribution(@user)
+    
+    redirect_to user_path(@user)
   end
   
   private

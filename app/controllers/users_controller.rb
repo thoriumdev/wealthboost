@@ -1,4 +1,13 @@
 class UsersController < ApplicationController
+  def show
+    @user = User.find(params[:id])
+    @projections = @user.projections
+    @fees_sum = 0
+    @projections.each do |projection|
+      @fees_sum += projection.fees_paid
+    end
+  end
+  
   def new
     @user = User.new
   end
