@@ -5,13 +5,15 @@ class WealthBoostsController < ApplicationController
   
   def create
     @user = User.find(params[:user_id])
-    @user.wealth_boosts.create(
-      year: 2015,
-      current_port: @user.current_investments_amount,
-      low_fee_port: @user.current_investments_amount,
-      proj_period: 65 - @user.age,
-      final_year_proj: 2015 + (65 - @user.age)
-    )
+    # @user.wealth_boosts.create(
+    #   year: 2015,
+    #   current_port: @user.current_investments_amount,
+    #   low_fee_port: @user.current_investments_amount,
+    #   proj_period: 65 - @user.age,
+    #   final_year_proj: 2015 + (65 - @user.age),
+    #   wealth_boost: 0
+    # )
     assum_proj_return = WealthBoost.assumed_projected_return(@user)
+    binding.pry
   end
 end
