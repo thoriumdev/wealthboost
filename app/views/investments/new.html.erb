@@ -2,10 +2,16 @@
 <%= form_for [@user, @investment] do |f| %>
   <%= f.label :investment_one %>
   <%= f.text_field :investment_one %>
+  <%= f.label :how_much_invested %>
+  <%= f.text_field :allocation_inv_one %>
   <%= f.label :investment_two %>
   <%= f.text_field :investment_two %>
+  <%= f.label :how_much_invested %>
+  <%= f.text_field :allocation_inv_two %>
   <%= f.label :investment_three %>
   <%= f.text_field :investment_three %>
+  <%= f.label :how_much_invested %>
+  <%= f.text_field :allocation_inv_three %>
   
   <%= f.submit class: "button" %>
 <% end %>

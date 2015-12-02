@@ -1,2 +1,6 @@
 <h1>You've already lost</h1>
-<h1><%= @fees_sum %></h1>
+<h1><%= @fees_sum_now %></h1>
+<h1>You will lose by retirement</h1>
+<h1><%= @fees_sum_retirement %></h1>
+
+<%= link_to "Wealth Boost", user_wealth_boosts_path(@user), class: "button", method: :post %>

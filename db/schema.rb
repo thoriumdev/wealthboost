@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123214350) do
+ActiveRecord::Schema.define(version: 20151202012611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,11 +84,14 @@ ActiveRecord::Schema.define(version: 20151123214350) do
     t.string   "name"
     t.decimal  "average_exp_ratio"
     t.integer  "user_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "investment_one"
     t.string   "investment_two"
     t.string   "investment_three"
+    t.decimal  "allocation_inv_one"
+    t.decimal  "allocation_inv_two"
+    t.decimal  "allocation_inv_three"
   end
 
   create_table "markets", force: :cascade do |t|
@@ -99,8 +102,13 @@ ActiveRecord::Schema.define(version: 20151123214350) do
     t.string   "geo_area"
     t.decimal  "expense_ratio"
     t.decimal  "asset_all_equity"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.decimal  "five",             default: 0.05
+    t.decimal  "ten",              default: 0.05
+    t.decimal  "fifteen",          default: 0.05
+    t.decimal  "twenty",           default: 0.05
+    t.decimal  "retirement",       default: 0.05
   end
 
   create_table "projections", force: :cascade do |t|
@@ -144,6 +152,28 @@ ActiveRecord::Schema.define(version: 20151123214350) do
     t.decimal  "return_today",               default: 6.0
     t.decimal  "return_retirement",          default: 5.0
     t.decimal  "salary_growth",              default: 2.9
+  end
+
+  create_table "wealth_boosts", force: :cascade do |t|
+    t.decimal  "current_port"
+    t.decimal  "low_fee_port"
+    t.decimal  "wealth_boost"
+    t.decimal  "growth_current"
+    t.decimal  "growth_low_fee"
+    t.decimal  "fees_current"
+    t.decimal  "fees_low_fee"
+    t.decimal  "assum_proj_return"
+    t.decimal  "current_exp_ratio"
+    t.decimal  "current_net_return"
+    t.decimal  "low_fee_exp_ratio"
+    t.decimal  "low_fee_net_return"
+    t.integer  "final_year_proj"
+    t.integer  "proj_period"
+    t.decimal  "initial_port_value"
+    t.integer  "users_id"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "year",               default: 2015
   end
 
 end

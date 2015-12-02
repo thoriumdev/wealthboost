@@ -9,6 +9,9 @@ class InvestmentsController < ApplicationController
     @investment_one = investment_params[:investment_one].upcase
     @investment_two = investment_params[:investment_two].upcase
     @investment_three = investment_params[:investment_three].upcase
+    @alloc_one = investment_params[:allocation_inv_one].to_f / 100
+    @alloc_two = investment_params[:allocation_inv_two].to_f / 100
+    @alloc_three = investment_params[:allocation_inv_three].to_f / 100
     
     @investment_one = Market.where("ticker = '#{@investment_one}'")[0]
     @investment_two = Market.where("ticker = '#{@investment_two}'")[0]
@@ -35,19 +38,21 @@ class InvestmentsController < ApplicationController
       sum += ratio.to_f
     end
     @user.investments.create(
-      investment_one: @investment_one,
-      investment_two: @investment_two,
-      investment_three: @investment_three,
-      average_exp_ratio: (sum/3).to_f
+      investment_one: @investment_one.ticker,
+      investment_two: @investment_two.ticker,
+      investment_three: @investment_three.ticker,
+      average_exp_ratio: (sum/3).to_f,
+      allocation_inv_one: @alloc_one,
+      allocation_inv_two: @alloc_two,
+      allocation_inv_three: @alloc_three
     )
     Projection.first_contribution(@user)
-    
     redirect_to user_path(@user)
   end
   
   private
   
   def investment_params
-    params.require(:investment).permit(:investment_one, :investment_two, :investment_three)
+    params.require(:investment).permit(:investment_one, :investment_two, :investment_three, :allocation_inv_one, :allocation_inv_two, :allocation_inv_three)
   end
 end

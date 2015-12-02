@@ -8,7 +8,9 @@ class Market < ActiveRecord::Base
       data_hash.each do |key, value|
         new_key = key.downcase.gsub(/[^0-9a-z ]/i, '').strip
         new_key.gsub!(' ', '_')
-        value.strip!
+        unless (value.nil?)
+          value.strip!
+        end
         if value == "N.A." || value == "#N/A" || value == "-"
           value = 0
         end
@@ -18,6 +20,7 @@ class Market < ActiveRecord::Base
           new_hash[new_key] = value
         end
       end
+
       mappings = {
         "ticker" => "ticker",
          "fund_name" => "fund_name",
@@ -25,10 +28,23 @@ class Market < ActiveRecord::Base
          "asset_class_broad" => "asset_class",
          "geographic_focus_revised" => "geo_area",
          "expense_ratio" => "expense_ratio",
-         "asset_all__equity" => "asset_all_equity"
+         "asset_all__equity" => "asset_all_equity",
+         "5" => "five",
+         "10" => "ten",
+         "15" => "fifteen",
+         "20" => "twenty",
+         "retirement" => "retirement"
       }
       final_hash = Hash[new_hash.map { |k, v| [mappings[k], v]}]
-      Market.find_or_create_by!(final_hash)
+
+      sec = Market.find_or_initialize_by(ticker: final_hash["ticker"].upcase)
+      sec.total_assets = final_hash["total_assets"]
+      final_hash["five"] ? sec.five = final_hash["five"] : sec.five = 0.05
+      final_hash["ten"] ? sec.ten = final_hash["ten"] : sec.ten = 0.05
+      final_hash["fifteen"] ? sec.fifteen = final_hash["fifteen"] : sec.fifteen = 0.05
+      final_hash["twenty"] ? sec.twenty = final_hash["twenty"] : sec.twenty = 0.05
+      final_hash["retirement"] ? sec.retirement = final_hash["retirement"] : sec.retirement = 0.05
+      sec.save!
     end
     Market.all.each do |sec|
       sec.ticker.upcase!
