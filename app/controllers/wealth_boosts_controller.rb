@@ -14,10 +14,6 @@ class WealthBoostsController < ApplicationController
     inv_three = Market.where("ticker = '#{inv_three}'")[0]
     
     inv_arr = [inv_one, inv_two, inv_three]
-
-    assum_proj_return = WealthBoost.assumed_projected_return(@user)
-    current_exp_ratio = @user.investments.last.average_exp_ratio.to_f
-    current_net_return = assum_proj_return - (current_exp_ratio/100)
     
     # Generate Recommendations
     recommendations_hash = {}
@@ -40,20 +36,6 @@ class WealthBoostsController < ApplicationController
       end
     end
     
-    low_fee_exp_ratio_sum = 0
-    recommendations_hash.each do |key, value|
-      low_fee_exp_ratio_sum += value[0].expense_ratio.to_f
-    end
-    
-    low_fee_exp_ratio = low_fee_exp_ratio_sum / 3
-    
-    # @user.wealth_boosts.create(
-    #   year: 2015,
-    #   current_port: @user.current_investments_amount,
-    #   low_fee_port: @user.current_investments_amount,
-    #   proj_period: 65 - @user.age,
-    #   final_year_proj: 2015 + (65 - @user.age),
-    #   wealth_boost: 0
-    # )
+    WealthBoost.make_projections(@user, recommendations_hash)
   end
 end

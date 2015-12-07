@@ -43,4 +43,51 @@ class WealthBoost < ActiveRecord::Base
     aar = (inv_one_return + inv_two_return + inv_three_return) / 3
     return aar
   end
+  
+  def self.make_projections(user, recommendations_hash)
+    assum_proj_return = WealthBoost.assumed_projected_return(user)
+    current_exp_ratio = user.investments.last.average_exp_ratio.to_f
+    current_net_return = assum_proj_return - (current_exp_ratio/100)
+    low_fee_exp_ratio = WealthBoost.get_low_fee_exp_ratio(recommendations_hash)
+    low_fee_net_return = assum_proj_return - (low_fee_exp_ratio/100)
+    current_port = user.current_investments_amount
+    low_fee_port = user.current_investments_amount
+    wealth_boost = current_port - low_fee_port
+    growth_current = current_port * current_net_return
+    growth_low_fee = low_fee_port * low_fee_net_return
+    fees_current = current_port * current_exp_ratio/100
+    fees_low_fee = low_fee_port * low_fee_exp_ratio/100
+    year = Time.now.year
+    proj_period = 65 - user.age
+    final_year_proj = year + proj_period
+    
+    counter = proj_period
+    
+    until counter <= 0
+      user.wealth_boosts.create(
+        year: year,
+        current_port: current_port,
+        low_fee_port: low_fee_port,
+        wealth_boost: wealth_boost,
+        growth_current: growth_current,
+        growth_low_fee: growth_low_fee,
+        fees_current: fees_current,
+        fees_low_fee: fees_low_fee
+      )
+      
+      counter -= 1
+      year += 1
+      current_port = current_port + growth_current
+      low_fee_port = low_fee_port + growth_low_fee
+    end
+    binding.pry
+  end
+  
+  def self.get_low_fee_exp_ratio(recommendations_hash)
+    low_fee_exp_ratio_sum = 0
+    recommendations_hash.each do |key, value|
+      low_fee_exp_ratio_sum += value[0].expense_ratio.to_f
+    end
+    low_fee_exp_ratio = low_fee_exp_ratio_sum / 3
+  end
 end
