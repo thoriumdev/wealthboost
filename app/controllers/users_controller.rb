@@ -12,12 +12,6 @@ class UsersController < ApplicationController
     @projection_now.each do |projection|
       @fees_sum_now += projection.fees_paid
     end
-    # # Generate Recommendations
-    # recommendations = []
-    # investments_arr.each do |inv|
-    #   recommendations << Security.generate_recommendations(inv)
-    #   recommendations << Security.generate_last_recommendation(inv)
-    # end
   end
   
   def new

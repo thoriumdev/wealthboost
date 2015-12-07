@@ -39,7 +39,7 @@ class WealthBoost < ActiveRecord::Base
       inv_three_return = inv_three.retirement.to_f
     end
     
-    # Calculate Average Annual Return w. Weights
+    # Calculate Average Annual Return
     aar = (inv_one_return + inv_two_return + inv_three_return) / 3
     return aar
   end
