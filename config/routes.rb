@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :users, shallow: true do
     resources :accounts, only: [:new, :create]
     resources :investments, only: [:new, :create]
-    resources :wealth_boosts, only: [:create]
+    resources :wealth_boosts, only: [:index, :create]
   end
   get 'portfolio_inputs' => 'search#portfolio_inputs'
   get 'results' => 'securities#index'

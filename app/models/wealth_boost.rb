@@ -61,7 +61,7 @@ class WealthBoost < ActiveRecord::Base
     proj_period = 65 - user.age
     final_year_proj = year + proj_period
     
-    counter = proj_period
+    counter = proj_period + 1
     
     until counter <= 0
       user.wealth_boosts.create(
@@ -79,6 +79,11 @@ class WealthBoost < ActiveRecord::Base
       year += 1
       current_port = current_port + growth_current
       low_fee_port = low_fee_port + growth_low_fee
+      wealth_boost = low_fee_port - current_port
+      growth_current = current_port * current_net_return
+      growth_low_fee = low_fee_port * low_fee_net_return
+      fees_current = current_port * current_exp_ratio/100
+      fees_low_fee = low_fee_port * low_fee_exp_ratio/100
     end
     binding.pry
   end

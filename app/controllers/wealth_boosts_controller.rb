@@ -1,6 +1,11 @@
 class WealthBoostsController < ApplicationController
   def index
-    
+    @user = User.find(params[:user_id])
+    @wealth_boost = 0
+    @user.wealth_boosts.each do |boost|
+      @wealth_boost += boost.wealth_boost.to_f
+    end
+    @wealth_boost = @wealth_boost.round(2)
   end
   
   def create
@@ -37,5 +42,7 @@ class WealthBoostsController < ApplicationController
     end
     
     WealthBoost.make_projections(@user, recommendations_hash)
+    
+    redirect_to user_wealth_boosts_path(@user)
   end
 end
