@@ -11,3 +11,5 @@
     <%= column_chart @wealth_boosts.group(:year).sum(:wealth_boost) %>
   </div>
 </div>
+
+<%= link_to "Create Account", user_path(@user), method: "PUT", class: "button" %>
