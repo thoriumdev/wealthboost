@@ -1,8 +1,9 @@
 class WealthBoostsController < ApplicationController
   def index
     @user = User.find(params[:user_id])
+    @wealth_boosts = @user.wealth_boosts
     @wealth_boost = 0
-    @user.wealth_boosts.each do |boost|
+    @wealth_boosts.each do |boost|
       @wealth_boost += boost.wealth_boost.to_f
     end
     @wealth_boost = @wealth_boost.round(2)

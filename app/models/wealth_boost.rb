@@ -85,7 +85,6 @@ class WealthBoost < ActiveRecord::Base
       fees_current = current_port * current_exp_ratio/100
       fees_low_fee = low_fee_port * low_fee_exp_ratio/100
     end
-    binding.pry
   end
   
   def self.get_low_fee_exp_ratio(recommendations_hash)

@@ -50,3 +50,6 @@ end
 
 # Foundation
 gem 'foundation-rails'
+
+# Generate charts
+gem "chartkick"
