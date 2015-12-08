@@ -1,3 +1,13 @@
-<h1>Switch to a low cost portfolio today</h1>
-<h1>to boost your wealth by <%= number_to_currency(@wealth_boost) %></h1>
-<%= bar_chart @wealth_boosts.group(:current_port).count %>
+<h1 class="wealth-boost-header">Switch to a low cost portfolio today to boost your wealth by <span><%= number_to_currency(@wealth_boost) %></span></h1>
+
+<div class="row">
+  <div class="large-centered columns">
+    <%= bar_chart({"Current Portfolio" => @current_port, "Low Fee Port" => @low_fee_port}) %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-centered columns">
+    <%= column_chart @wealth_boosts.group(:year).sum(:wealth_boost) %>
+  </div>
+</div>

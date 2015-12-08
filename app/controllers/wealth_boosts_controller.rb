@@ -3,8 +3,12 @@ class WealthBoostsController < ApplicationController
     @user = User.find(params[:user_id])
     @wealth_boosts = @user.wealth_boosts
     @wealth_boost = 0
+    @current_port = 0
+    @low_fee_port = 0
     @wealth_boosts.each do |boost|
       @wealth_boost += boost.wealth_boost.to_f
+      @current_port += boost.current_port.to_f
+      @low_fee_port += boost.low_fee_port.to_f
     end
     @wealth_boost = @wealth_boost.round(2)
   end
