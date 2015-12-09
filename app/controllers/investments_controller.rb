@@ -32,16 +32,19 @@ class InvestmentsController < ApplicationController
       end
     end
     
+    allocation_arr = [@alloc_one, @alloc_two, @alloc_three]
+    
     # Find average expense ratio
     sum = 0
-    expense_ratios_arr.each do |ratio|
-      sum += ratio.to_f
+    expense_ratios_arr.each_with_index do |ratio, alloc|
+      sum += (ratio.to_f * allocation_arr[alloc])
     end
+    
     @user.investments.create(
       investment_one: @investment_one.ticker,
       investment_two: @investment_two.ticker,
       investment_three: @investment_three.ticker,
-      average_exp_ratio: (sum/3).to_f,
+      average_exp_ratio: sum.to_f,
       allocation_inv_one: @alloc_one,
       allocation_inv_two: @alloc_two,
       allocation_inv_three: @alloc_three

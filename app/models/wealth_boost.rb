@@ -12,6 +12,12 @@ class WealthBoost < ActiveRecord::Base
     inv_two = Market.where("ticker = '#{inv.investment_two}'")[0]
     inv_three = Market.where("ticker = '#{inv.investment_three}'")[0]
     
+    # Find User's investments weights
+    investments = user.investments.last
+    weight_one = investments.allocation_inv_one.to_f
+    weight_two = investments.allocation_inv_two.to_f
+    weight_three = investments.allocation_inv_three.to_f
+    
     # Find annual returns based on holding Period
     inv_one_return = 0
     inv_two_return = 0
@@ -39,16 +45,16 @@ class WealthBoost < ActiveRecord::Base
       inv_three_return = inv_three.retirement.to_f
     end
     
-    # Calculate Average Annual Return
-    aar = (inv_one_return + inv_two_return + inv_three_return) / 3
-    return aar
+    # Calculate Weighted Average Annual Return
+    waar = (weight_one * inv_one_return) + (weight_two * inv_two_return) + (weight_three * inv_three_return)
+    return waar
   end
   
   def self.make_projections(user, recommendations_hash)
     assum_proj_return = WealthBoost.assumed_projected_return(user)
     current_exp_ratio = user.investments.last.average_exp_ratio.to_f
     current_net_return = assum_proj_return - (current_exp_ratio/100)
-    low_fee_exp_ratio = WealthBoost.get_low_fee_exp_ratio(recommendations_hash)
+    low_fee_exp_ratio = WealthBoost.get_low_fee_exp_ratio(recommendations_hash, user)
     low_fee_net_return = assum_proj_return - (low_fee_exp_ratio/100)
     current_port = user.current_investments_amount
     low_fee_port = user.current_investments_amount
@@ -87,7 +93,10 @@ class WealthBoost < ActiveRecord::Base
     end
   end
   
-  def self.get_low_fee_exp_ratio(recommendations_hash)
+  def self.get_low_fee_exp_ratio(recommendations_hash, user)
+    investments = user.investments.last
+    
+    investments
     low_fee_exp_ratio_sum = 0
     recommendations_hash.each do |key, value|
       low_fee_exp_ratio_sum += value[0].expense_ratio.to_f

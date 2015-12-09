@@ -13,7 +13,7 @@ class Security < ActiveRecord::Base
         sec_obj_compare_geo_score = sec_obj_compare.geo_area.to_sym
         geo_area_score = geo_area_obj.send(sec_obj_compare_geo_score)
         
-        inserts.push "('#{sec_obj_compare.ticker}', #{asset_class_score}, #{sec_obj_compare.expense_ratio}, #{sec_obj_compare.total_assets}, #{geo_area_score}, #{asset_class_score + geo_area_score.to_i}, '#{sec_obj_compare.asset_class}', #{sec_obj.id}, '#{sec.created_at}', '#{sec.updated_at}')"
+        inserts.push "('#{sec_obj_compare.ticker}', #{asset_class_score}, #{sec_obj_compare.expense_ratio.to_f}, #{sec_obj_compare.total_assets}, #{geo_area_score}, #{asset_class_score + geo_area_score.to_i}, '#{sec_obj_compare.asset_class}', #{sec_obj.id}, '#{sec.created_at}', '#{sec.updated_at}')"
         # new_obj = sec_obj.securities.create!(security: sec_obj_compare.ticker, asset_class_score: asset_class_score, expense_ratio: sec_obj_compare.expense_ratio, total_assets: sec_obj_compare.total_assets, geo_area_score: geo_area_score, total_score: asset_class_score + geo_area_score.to_i, asset_class: sec_obj_compare.asset_class)
       else
         ticker = sec.ticker.upcase
@@ -23,7 +23,7 @@ class Security < ActiveRecord::Base
         asset_class_score = asset_class_obj.send(sec_obj_compare_asset_score)
         geo_area_score = geo_area_obj.send(sec_obj_compare_geo_score)
         
-        inserts.push "('#{sec_obj_compare.ticker}', #{asset_class_score}, #{sec_obj_compare.expense_ratio}, #{sec_obj_compare.total_assets}, #{geo_area_score}, #{asset_class_score + geo_area_score.to_i}, '#{sec_obj_compare.asset_class}', #{sec_obj.id}, '#{sec.created_at}', '#{sec.updated_at}')"
+        inserts.push "('#{sec_obj_compare.ticker}', #{asset_class_score}, #{sec_obj_compare.expense_ratio.to_f}, #{sec_obj_compare.total_assets}, #{geo_area_score}, #{asset_class_score + geo_area_score.to_i}, '#{sec_obj_compare.asset_class}', #{sec_obj.id}, '#{sec.created_at}', '#{sec.updated_at}')"
         # sql = "INSERT INTO securities ('security', 'asset_class_score','expense_ratio', 'total_assets', 'geo_area_score', 'total_score', 'asset_class', 'market_id') VALUES #{inserts.join(", ")}"
         
         # new_obj = sec_obj.securities.create!(security: sec_obj_compare.ticker, asset_class_score: asset_class_score, expense_ratio: sec_obj_compare.expense_ratio, total_assets: sec_obj_compare.total_assets, geo_area_score: geo_area_score, total_score: asset_class_score + geo_area_score.to_i, asset_class: sec_obj_compare.asset_class)

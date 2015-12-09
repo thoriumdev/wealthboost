@@ -37,15 +37,22 @@ class WealthBoostsController < ApplicationController
     # Get expense ratios for recommendations
     recommendations_hash.each do |key, values|
       values = values.to_a
-      values.each_with_index do |item, index|
-        if values[index].expense_ratio < values[index - 1].expense_ratio
-          values.delete_at(index-1)
+      
+      new_values = values.map do |value|
+        Market.where("ticker = '#{value.security}'")[0]
+      end
+      
+      recommendations_hash[key] = new_values
+
+      new_values.each_with_index do |item, index|
+        if new_values[index].expense_ratio < new_values[index - 1].expense_ratio
+          new_values.delete_at(index-1)
         else
-          values.delete_at(index)
+          new_values.delete_at(index)
         end
       end
     end
-    
+
     WealthBoost.make_projections(@user, recommendations_hash)
     
     redirect_to user_wealth_boosts_path(@user)
