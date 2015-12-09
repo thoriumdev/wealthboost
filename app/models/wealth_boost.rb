@@ -66,7 +66,6 @@ class WealthBoost < ActiveRecord::Base
     year = Time.now.year
     proj_period = 65 - user.age
     final_year_proj = year + proj_period
-    
     counter = proj_period + 1
     
     until counter <= 0
@@ -96,11 +95,18 @@ class WealthBoost < ActiveRecord::Base
   def self.get_low_fee_exp_ratio(recommendations_hash, user)
     investments = user.investments.last
     
-    investments
+    weight_one = investments.allocation_inv_one
+    weight_two = investments.allocation_inv_two
+    weight_three = investments.allocation_inv_three
+    
+    weights_arr = [weight_one, weight_two, weight_three]
+    
     low_fee_exp_ratio_sum = 0
     recommendations_hash.each do |key, value|
-      low_fee_exp_ratio_sum += value[0].expense_ratio.to_f
+      value.each_with_index do |item, index|
+        low_fee_exp_ratio_sum += (item.expense_ratio.to_f * weights_arr[index])
+      end
     end
-    low_fee_exp_ratio = low_fee_exp_ratio_sum / 3
+    return low_fee_exp_ratio_sum
   end
 end

@@ -2,14 +2,9 @@ class WealthBoostsController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     @wealth_boosts = @user.wealth_boosts
-    @wealth_boost = 0
-    @current_port = 0
-    @low_fee_port = 0
-    @wealth_boosts.each do |boost|
-      @wealth_boost += boost.wealth_boost.to_f
-      @current_port += boost.current_port.to_f
-      @low_fee_port += boost.low_fee_port.to_f
-    end
+    @current_port = @wealth_boosts.last.current_port.to_f
+    @low_fee_port = @wealth_boosts.last.low_fee_port.to_f
+    @wealth_boost = @low_fee_port - @current_port
     @wealth_boost = @wealth_boost.round(2)
   end
   
@@ -30,7 +25,8 @@ class WealthBoostsController < ApplicationController
     inv_arr.each do |inv|
       recommendations = []
       recommendations << Security.generate_recommendations(inv)
-      recommendations << Security.generate_last_recommendation(inv)
+      last_recommendation = Security.generate_last_recommendation(inv)
+      recommendations << last_recommendation
       recommendations_hash[inv.ticker] = recommendations[0]
     end
     

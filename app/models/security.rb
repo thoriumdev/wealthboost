@@ -35,6 +35,7 @@ class Security < ActiveRecord::Base
   
   def self.generate_recommendations(sec)
     sec.securities.where('total_score >= 16').order(expense_ratio: :asc, total_assets: :desc).limit(2)
+    binding.pry
   end
   
   def self.generate_last_recommendation(sec)
