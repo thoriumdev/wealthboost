@@ -33,12 +33,14 @@ class Market < ActiveRecord::Base
          "10" => "ten",
          "15" => "fifteen",
          "20" => "twenty",
-         "retirement" => "retirement"
+         "retirement" => "retirement",
+         "etf_vs_mutual_fund" => "asset_type"
       }
       final_hash = Hash[new_hash.map { |k, v| [mappings[k], v]}]
 
       sec = Market.find_or_initialize_by(ticker: final_hash["ticker"].upcase)
       sec.total_assets = final_hash["total_assets"]
+      sec.asset_type = final_hash["asset_type"]
       final_hash["five"] ? sec.five = final_hash["five"] : sec.five = 0.05
       final_hash["ten"] ? sec.ten = final_hash["ten"] : sec.ten = 0.05
       final_hash["fifteen"] ? sec.fifteen = final_hash["fifteen"] : sec.fifteen = 0.05
@@ -48,12 +50,12 @@ class Market < ActiveRecord::Base
     end
     Market.all.each do |sec|
       sec.ticker.upcase!
-      sec.asset_class.downcase!
-      sec.geo_area.downcase!
-      sec.geo_area.gsub!(' ', '_')
-      sec.asset_class.gsub!(' ', '')
-      sec.asset_class.gsub!('-', '_')
-      sec.asset_class.gsub!(/[()]/,'')
+      sec.asset_class.nil? ? sec.asset_class = nil : sec.asset_class.downcase!
+      sec.geo_area.nil? ? sec.geo_area = nil : sec.geo_area.downcase!
+      sec.geo_area.nil? ? sec.geo_area = nil : sec.geo_area.gsub!(' ', '_')
+      sec.asset_class.nil? ? sec.asset_class = nil : sec.asset_class.gsub!(' ', '')
+      sec.asset_class.nil? ? sec.asset_class = nil : sec.asset_class.gsub!('-', '_')
+      sec.asset_class.nil? ? sec.asset_class = nil : sec.asset_class.gsub!(/[()]/,'')
       sec.save!
     end
   end
@@ -70,8 +72,10 @@ class Market < ActiveRecord::Base
     Security.generate_last_recommendation(sec)
   end
   
+  # Rank all securities
   def self.all_sec
-    Market.all.each do |sec|
+    market_arr = Market.where("asset_type = 'ETF'")
+    market_arr.each do |sec|
       AssetClass.get_asset_score(sec)
     end
   end
