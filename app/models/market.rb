@@ -40,6 +40,11 @@ class Market < ActiveRecord::Base
 
       sec = Market.find_or_initialize_by(ticker: final_hash["ticker"].upcase)
       sec.total_assets = final_hash["total_assets"]
+      sec.fund_name = final_hash["fund_name"]
+      sec.asset_class = final_hash["asset_class"]
+      sec.geo_area = final_hash["geo_area"]
+      sec.expense_ratio = final_hash["expense_ratio"]
+      sec.asset_all_equity = final_hash["asset_all_equity"]
       sec.asset_type = final_hash["asset_type"]
       final_hash["five"] ? sec.five = final_hash["five"] : sec.five = 0.05
       final_hash["ten"] ? sec.ten = final_hash["ten"] : sec.ten = 0.05
@@ -50,12 +55,12 @@ class Market < ActiveRecord::Base
     end
     Market.all.each do |sec|
       sec.ticker.upcase!
-      sec.asset_class.nil? ? sec.asset_class = nil : sec.asset_class.downcase!
-      sec.geo_area.nil? ? sec.geo_area = nil : sec.geo_area.downcase!
-      sec.geo_area.nil? ? sec.geo_area = nil : sec.geo_area.gsub!(' ', '_')
-      sec.asset_class.nil? ? sec.asset_class = nil : sec.asset_class.gsub!(' ', '')
-      sec.asset_class.nil? ? sec.asset_class = nil : sec.asset_class.gsub!('-', '_')
-      sec.asset_class.nil? ? sec.asset_class = nil : sec.asset_class.gsub!(/[()]/,'')
+      sec.asset_class.downcase!
+      sec.geo_area.downcase!
+      sec.geo_area.gsub!(' ', '_')
+      sec.asset_class.gsub!(' ', '')
+      sec.asset_class.gsub!('-', '_')
+      sec.asset_class.gsub!(/[()]/,'')
       sec.save!
     end
   end

@@ -3,7 +3,8 @@ class Security < ActiveRecord::Base
   
   def self.rank_all_sec(sec_obj, asset_class_obj, geo_area_obj)
     inserts = []
-    Market.all.each do |sec|
+    market_arr = Market.where("asset_type = 'ETF'")
+    market_arr.each do |sec|
       if sec_obj.asset_class == "multi_assetclass"
         asset_allocation = sec_obj.asset_all_equity.to_f - sec.asset_all_equity.to_f
         absolute_value_asset_allocation = asset_allocation.abs
@@ -14,7 +15,6 @@ class Security < ActiveRecord::Base
         geo_area_score = geo_area_obj.send(sec_obj_compare_geo_score)
         
         inserts.push "('#{sec_obj_compare.ticker}', #{asset_class_score}, #{sec_obj_compare.expense_ratio.to_f}, #{sec_obj_compare.total_assets}, #{geo_area_score}, #{asset_class_score + geo_area_score.to_i}, '#{sec_obj_compare.asset_class}', #{sec_obj.id}, '#{sec.created_at}', '#{sec.updated_at}')"
-        # new_obj = sec_obj.securities.create!(security: sec_obj_compare.ticker, asset_class_score: asset_class_score, expense_ratio: sec_obj_compare.expense_ratio, total_assets: sec_obj_compare.total_assets, geo_area_score: geo_area_score, total_score: asset_class_score + geo_area_score.to_i, asset_class: sec_obj_compare.asset_class)
       else
         ticker = sec.ticker.upcase
         sec_obj_compare = Market.where("ticker = '#{ticker}'")[0]
@@ -24,9 +24,6 @@ class Security < ActiveRecord::Base
         geo_area_score = geo_area_obj.send(sec_obj_compare_geo_score)
         
         inserts.push "('#{sec_obj_compare.ticker}', #{asset_class_score}, #{sec_obj_compare.expense_ratio.to_f}, #{sec_obj_compare.total_assets}, #{geo_area_score}, #{asset_class_score + geo_area_score.to_i}, '#{sec_obj_compare.asset_class}', #{sec_obj.id}, '#{sec.created_at}', '#{sec.updated_at}')"
-        # sql = "INSERT INTO securities ('security', 'asset_class_score','expense_ratio', 'total_assets', 'geo_area_score', 'total_score', 'asset_class', 'market_id') VALUES #{inserts.join(", ")}"
-        
-        # new_obj = sec_obj.securities.create!(security: sec_obj_compare.ticker, asset_class_score: asset_class_score, expense_ratio: sec_obj_compare.expense_ratio, total_assets: sec_obj_compare.total_assets, geo_area_score: geo_area_score, total_score: asset_class_score + geo_area_score.to_i, asset_class: sec_obj_compare.asset_class)
       end
     end
     sql = "INSERT INTO securities (security, asset_class_score, expense_ratio, total_assets, geo_area_score, total_score, asset_class, market_id, created_at, updated_at) VALUES #{inserts.join(", ")}"
