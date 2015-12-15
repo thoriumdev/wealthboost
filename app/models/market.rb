@@ -79,8 +79,7 @@ class Market < ActiveRecord::Base
   
   # Rank all securities
   def self.all_sec
-    market_arr = Market.where("asset_type = 'ETF'")
-    market_arr.each do |sec|
+    Market.all.each do |sec|
       AssetClass.get_asset_score(sec)
     end
   end

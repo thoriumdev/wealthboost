@@ -25,11 +25,9 @@ class WealthBoostsController < ApplicationController
     inv_arr.each do |inv|
       recommendations = []
       recommendations << Security.generate_recommendations(inv)
-      last_recommendation = Security.generate_last_recommendation(inv)
-      recommendations << last_recommendation
+      recommendations << Security.generate_last_recommendation(inv)
       recommendations_hash[inv.ticker] = recommendations[0]
     end
-    
     # Get expense ratios for recommendations
     recommendations_hash.each do |key, values|
       values = values.to_a
