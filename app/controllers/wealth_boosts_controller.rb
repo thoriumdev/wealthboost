@@ -26,6 +26,7 @@ class WealthBoostsController < ApplicationController
       recommendations = []
       recommendations << Security.generate_recommendations(inv)
       recommendations << Security.generate_last_recommendation(inv)
+      binding.pry
       recommendations_hash[inv.ticker] = recommendations[0]
     end
     # Get expense ratios for recommendations

@@ -38,11 +38,22 @@ class Security < ActiveRecord::Base
     if sec.asset_class == "multi_assetclass" && sec.geo_area == "united_states"
       schb = Market.where("ticker = 'SCHB'")[0]
       schz = Market.where("ticker = 'SCHZ'")[0]
+      third_rec = {}
       return [schb, schz]
     elsif sec.asset_class == "multi_assetclass" && sec.geo_area == "canada"
       hxt = Market.where("ticker = 'HXT'")[0]
       xqb = Market.where("ticker = 'XQB'")[0]
-      return [hxt, xqb]
+      third_rec = {}
+      hxt_alloc = sec.asset_all_equity.to_f/100
+      xqb_alloc = 1 - hxt_alloc
+      third_rec["ticker"] = "HXT_XQB"
+      third_rec["expense_ratio"] = hxt_alloc * hxt.expense_ratio.to_f + xqb_alloc * xqb.expense_ratio.to_f
+      third_rec["five"] = hxt_alloc * hxt.five.to_f + xqb_alloc * xqb.five.to_f
+      third_rec["ten"] = hxt_alloc * hxt.ten.to_f + xqb_alloc * xqb.ten.to_f
+      third_rec["fifteen"] = hxt_alloc * hxt.fifteen.to_f + xqb_alloc * xqb.fifteen.to_f
+      third_rec["twenty"] = hxt_alloc * hxt.twenty.to_f + xqb_alloc * xqb.twenty.to_f
+      third_rec["retirement"] = hxt_alloc * hxt.retirement.to_f + xqb_alloc * xqb.retirement.to_f
+      return third_rec
     elsif sec.asset_class[0, 11] == "commodities"
       sec.securities.where("total_score >= 16 AND asset_class = 'commodities_broad'").order(expense_ratio: :asc, total_assets: :desc).limit(1)[0]
     elsif sec.asset_class[0, 8] == "equities"
